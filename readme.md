@@ -41,4 +41,4 @@ add:添加一条数据方法
 ```
 
 ## 效果
-![image](https://raw.githubusercontent.com/HappyKnow/circular-similarity/master/screen.png)
+![image](https://raw.githubusercontent.com/qq1060844713/list-animation/master/screen.png)
