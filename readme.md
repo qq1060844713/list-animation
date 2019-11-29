@@ -36,7 +36,7 @@ Vue.use(ListAnimation)
 ref: 定义调用组件中的方法
 slot-scope:必填项 列表item 自定义条目样式
 TableLen: 显示的数量
-listData: 数据源
+listData: {} 数据源
 add:添加一条数据方法
 ```
 
