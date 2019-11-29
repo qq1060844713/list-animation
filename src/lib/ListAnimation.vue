@@ -1,6 +1,6 @@
 <template>
     <transition-group class="list-item" name='flip-list' tag='ul' mode='in-out'>
-        <div class="flip-list-item" :style="'height:'+ height / TableLen + 'px'" v-for="(item,index) in TableData" :key="item.id">
+        <div class="flip-list-item" :style="'height:'+ height / TableLen + 'px'" v-for="(item,index) in TableData" :key="item.ids">
              <slot :item="item" :index="index"></slot>
         </div>
     </transition-group>
@@ -13,7 +13,6 @@
             TableLen: Number,
             'listData': { // 列表数据；
                 type: Object,
-                // required: true
                 default: () => {
                     return {};
                 }
@@ -49,6 +48,7 @@
             },
             add(newData) {
                 let _this = this;
+                newData.ids = Math.floor(Math.random() * 10000000);
                  if (newData instanceof Array) {
                     for (let i = 0; i < newData.length; i++) {
                         _this.personDate.push(newData[i]);

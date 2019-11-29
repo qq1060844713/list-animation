@@ -5,7 +5,7 @@
         <div class="item">
             <div class="container">
                 <list-animation ref="listAnimation"
-                              :TableLen="5" :listData='listdata' :option='options'>
+                              :TableLen="5" :listData='listdata'>
                     <template slot-scope="{item}">
                         <img style="height: 50px;width: 50px" :src="item.image"/>
                         <span>{{item.name}}</span>
@@ -28,8 +28,6 @@
         data() {
             return {
                 listdata:[],
-                options:{
-                }
             }
         },
         methods:{
