@@ -1,7 +1,19 @@
 <template>
-    <transition-group class="list-item" name='flip-list' tag='ul' mode='in-out'>
-        <div class="flip-list-item" :style="'height:'+ height / TableLen + 'px'" v-for="(item,index) in TableData" :key="item.ids">
-             <slot :item="item" :index="index"></slot>
+    <transition-group
+            :class="initPos==='top-to-bottom'?'list-item':'list-item-bottom'"
+            name='flip-list'
+            tag='ul'
+            mode='in-out'
+            v-bind:style="slidStyle"
+            :enter-class="enterStyle"
+            enter-active-class="flip-list-enter-active"
+            move-class="flip-list-move"
+            leave-active-class="flip-list-leave-active"
+            :leave-to-class="leaveStyle">
+        <div class='flip-list-item' :style="initPos==='top-to-bottom'?'max-height:'+ 100/TableLen+'%;'+'min-height:'+100/TableLen+'%;':'max-width:'+100/TableLen+'%;'+'min-width:'+100/TableLen+'%'"
+             :key="item.ids" v-for="(item,index) in TableData"
+             @click="getItem(item)">
+            <slot :item="item"></slot>
         </div>
     </transition-group>
 </template>
@@ -11,20 +23,26 @@
         name: 'ListAnimation',
         props: {
             TableLen: Number,
-            'listData': { // 列表数据；
-                type: Object,
+            'listData': {
+                type: Array,
                 default: () => {
-                    return {};
+                    return [];
                 }
             },
-
-            // 来自用户的选项配置
             'option': {
                 type: Object,
                 default: () => {
                     return {}
                 }
-            }
+            },
+            'initPos': {
+                type: String,
+                default: ''
+            },
+            'duration': {
+                type: String,
+                default: '1.2s'
+            },
         },
         data: function () {
             return {
@@ -35,36 +53,74 @@
         computed: {
             TableData: function () {
                 let _this = this;
-                if (_this.$el) _this.height = _this.$el.parentElement.offsetHeight;
                 if (_this.personDate.length > _this.TableLen) {
                     _this.personDate.splice(_this.TableLen, 1);
                 }
                 return _this.personDate;
+            },
+            slidStyle() {
+                if (this.duration) {
+                    document.styleSheets[0].insertRule('.flip-list-enter-active { transition: all ' + this.duration + '!important; }', 0);
+                    document.styleSheets[0].insertRule('.flip-list-move { transition: all ' + this.duration + '!important; }', 0);
+                }
+            },
+            enterStyle: function () {
+                switch (this.initPos) {
+                    case 'top-to-bottom':
+                        return 'flip-list-enter';
+                    case 'left-to-right':
+                        return 'flip-list-left-enter';
+                }
+            },
+            leaveStyle: function () {
+                switch (this.initPos) {
+                    case 'top-to-bottom':
+                        return 'flip-list-leave-to';
+                    case 'left-to-right':
+                        return 'flip-list-left-leave-to';
+                }
             }
         },
         methods: {
+            randomIndex() {
+                return Math.floor(Math.random() * 1000)
+            },
             getItem(item) {
                 this.$emit('item', item);
             },
             add(newData) {
                 let _this = this;
-                newData.ids = Math.floor(Math.random() * 10000000);
-                 if (newData instanceof Array) {
+                if (newData instanceof Array) {
                     for (let i = 0; i < newData.length; i++) {
-                        _this.personDate.push(newData[i]);
+                        newData[i].ids = _this.randomIndex();
+                        _this.personDate.unshift(newData[i]);
                     }
-                    return _this.personDate
+                } else {
+                    newData.ids = _this.randomIndex();
+                    _this.personDate.unshift(newData)
                 }
-                _this.personDate.unshift(newData);
+            }
+        },
+        mounted(){
+            if (this.listData instanceof Array) {
+                for (let i = 0; i < this.listData.length; i++) {
+                    this.listData[i].ids = this.randomIndex();
+                    this.personDate.unshift(this.listData[i]);
+                }
             }
         },
         watch: {
             // list数据更新
-            listData(newVal, oldVal) {
-                this.$nextTick(() => {
-                    this.personDate.unshift(newVal);
-                })
-            }
+            // listData(newVal, oldVal) {
+            //     this.$nextTick(() => {
+            //         if (newVal instanceof Array) {
+            //             for (let i = 0; i < newVal.length; i++) {
+            //                 this.personDate.push(newVal[i]);
+            //             }
+            //             return this.personDate
+            //         }
+            //     })
+            // }
         },
     }
 </script>
@@ -75,7 +131,17 @@
         flex-direction: column;
         align-content: space-around;
         width: 100%;
-        overflow:hidden
+        height: 100%;
+        overflow: hidden;
+    }
+    .list-item-bottom {
+        display: flex;
+        align-content: space-around;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        flex-direction: row;
+        align-items: center;
     }
 
     .flip-list-enter-active {
@@ -90,25 +156,30 @@
         width: 100%;
         flex-grow: 1;
         position: relative;
-        max-height: 20%;
-    }
-    .flip-list-leave-active {
-        transition: all 1.2s;
-    }
-
-    .flip-list-enter-active {
-        transition: all 1.2s;
-    }
-
-    .flip-list-move {
-        transition: transform 1.2s;
     }
 
     .flip-list-enter {
+        transition: all 1.2s;
+        opacity: 0;
         transform: translateY(-100%);
     }
 
+    .flip-list-enter-to {
+        transition: all 1.2s;
+    }
+
     .flip-list-leave-to {
+        transition: all 1.2s;
+        opacity: 0;
         transform: translateY(100%);
     }
+    .flip-list-left-enter {
+        transform: translate3d(-100%, 0, 0)
+    }
+
+    .flip-list-left-leave-to {
+        transform: translate3d(100%, 0, 0)
+    }
+
+
 </style>

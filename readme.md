@@ -19,13 +19,14 @@ Vue.use(ListAnimation)
 ``` html
   <div class="item">
       <div class="container">
-           <list-animation ref="listAnimation"
-                              :TableLen="5" :listData='listdata'>
-                <template slot-scope="{item}">
-                    <img style="height: 50px;width: 50px" :src="item.image"/>
-                    <span>{{item.name}}</span>
-                </template>
-           </list-animation>
+            <list-animation ref="listAnimation_list"
+                        :TableLen="6" :listData='listdata' initPos="top-to-bottom" duration="1.2s">
+               <template slot-scope="{item}">
+                  <div class="box">
+                      <img class="item" :src="item.image"/>
+                  </div>
+               </template>
+            </list-animation>
       </div>
   </div>
   this.$refs.listAnimation.add(item);
@@ -33,12 +34,19 @@ Vue.use(ListAnimation)
 
 组件属性
 ```
-ref: 定义调用组件中的方法
-slot-scope:必填项 列表item 自定义条目样式
 TableLen: 显示的数量
-listData: {} 数据源
-add:添加一条数据方法
+listData: [] 数据源
+initPos: 动画方向(目前仅支持两种) top-to-bottom (从上到下) left-to-right(从左到右)
+duration:动画时间 默认1.2s (可自动调节滑动的时间)
 ```
 
+组件方法
+```
+add:添加一条数据方法
+
+```
+
+
+
 ## 效果
-![image](https://raw.githubusercontent.com/qq1060844713/list-animation/master/screen.png)
+![image](https://raw.githubusercontent.com/qq1060844713/list-animation/master/screen.gif)
