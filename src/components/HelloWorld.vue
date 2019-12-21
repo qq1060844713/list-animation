@@ -3,7 +3,7 @@
         <div style="float: left;margin-left: 20vw">
             <p>方向:从上到下</p>
             <div class="main">
-                <div class="container">
+                <div class="con">
                     <list-animation ref="listAnimation_list"
                                     :TableLen="6" :listData='listdata' initPos="top-to-bottom" duration="1.2s">
                         <template slot-scope="{item}">
@@ -18,11 +18,11 @@
         <div style="text-align: center">
             <div class="main" style="margin-right: 20vw">
                 <p style="margin-top: 6vw">方向:从左到右</p>
-                <div class="container1">
+                <div class="con-l">
                     <list-animation ref="listAnimation"
                                     :TableLen="4" :listData='listdata' initPos="left-to-right" duration="1.2s">
                         <template slot-scope="{item}">
-                            <div class="latest-img-backgrounds">
+                            <div class="lat-bgs">
                                 <img class="item" :src="item.image"/>
                             </div>
                         </template>
@@ -81,7 +81,7 @@
             }
         },
         mounted(){
-            // this.timer();
+            this.timer();
         }
     }
 </script>
@@ -92,13 +92,13 @@
         display: inline-block;
     }
 
-    .container {
+    .con {
         width: 200px;
         height: 400px;
         border: 1px solid #46513c;
         display: flex;
     }
-    .container1 {
+    .con-l {
         width: 500px;
         height: 200px;
         border: 1px solid #46513c;
@@ -120,7 +120,7 @@
         justify-content: center;
         margin: -1vw;
     }
-    .box1 {
+    .box_l {
         width: 100%;
         height: 100%;
         display: flex;
@@ -133,7 +133,7 @@
         align-self: center;
     }
 
-    .latest-img-backgrounds {
+    .lat-bgs {
         width: 100%;
         height: 100%;
         vertical-align: middle;

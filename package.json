@@ -1,6 +1,6 @@
 {
   "name": "list-animation",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "private": false,
   "main": "src/lib/index.js",
   "files": [
@@ -13,6 +13,8 @@
   "keywords": [
     "vue",
     "从上到下",
+    "从左到右",
+    "平滑滚动",
     "自适应"
   ],
   "author": "suxx",

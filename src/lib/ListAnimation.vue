@@ -1,6 +1,6 @@
 <template>
     <transition-group
-            :class="initPos==='top-to-bottom'?'list-item':'list-item-bottom'"
+            :class="initPos==='top-to-bottom'?'li':'li-bottom'"
             name='flip-list'
             tag='ul'
             mode='in-out'
@@ -112,21 +112,21 @@
 </script>
 
 <style scoped lang="scss">
-    .list-item {
+    .li {
         display: flex;
-        flex-direction: column;
-        align-content: space-around;
         width: 100%;
         height: 100%;
+        flex-direction: column;
+        align-content: space-around;
         overflow: hidden;
     }
-    .list-item-bottom {
+    .li-bottom {
         display: flex;
-        align-content: space-around;
         width: 100%;
-        overflow: hidden;
+        align-content: space-around;
         flex-direction: row;
         align-items: center;
+        overflow: hidden;
     }
 
     .flip-list-enter-active {

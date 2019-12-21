@@ -40,6 +40,17 @@ initPos: 动画方向(目前仅支持两种) top-to-bottom (从上到下) left-t
 duration:动画时间 默认1.2s (可自动调节滑动的时间)
 ```
 
+vue属性方式
+```
+<template slot-scope="{item}">
+    <div>列表item布局样式</div>
+</template>
+slot-scope:(必填项)列表条目名称可自定义
+列表布局自定义
+
+```
+
+
 组件方法
 ```
 add:添加数据方法(Array or Object)
