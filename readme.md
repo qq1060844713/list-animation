@@ -17,18 +17,16 @@ Vue.use(ListAnimation)
 
 使用组件
 ``` html
-  <div class="item">
-      <div class="container">
-            <list-animation ref="listAnimation_list"
+    <div class="container">
+       <list-animation ref="listAnimation_list"
                         :TableLen="6" :listData='listdata' initPos="top-to-bottom" duration="1.2s">
-               <template slot-scope="{item}">
-                  <div class="box">
-                      <img class="item" :src="item.image"/>
-                  </div>
-               </template>
-            </list-animation>
-      </div>
-  </div>
+          <template slot-scope="{item}">
+              <div class="box">
+                 <img class="item" :src="item.image"/>
+              </div>
+          </template>
+       </list-animation>
+    </div>
   this.$refs.listAnimation.add(item);
 ```
 
@@ -46,8 +44,6 @@ vue属性方式
     <div>列表item布局样式</div>
 </template>
 slot-scope:(必填项)列表条目名称可自定义
-列表布局自定义
-
 ```
 
 
