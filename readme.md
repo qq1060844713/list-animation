@@ -18,8 +18,7 @@ Vue.use(ListAnimation)
 使用组件
 ``` html
     <div class="container">
-       <list-animation ref="listAnimation_list"
-                        :TableLen="6" :listData='listdata' initPos="top-to-bottom" duration="1.2s">
+       <list-animation ref="listAnimation_list" :TableLen="6" :listData='listdata' initPos="top-to-bottom" duration="1.2s">
           <template slot-scope="{item}">
               <div class="box">
                  <img class="item" :src="item.image"/>
