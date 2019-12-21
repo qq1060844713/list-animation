@@ -11,7 +11,7 @@
             leave-active-class="flip-list-leave-active"
             :leave-to-class="leaveStyle">
         <div class='flip-list-item' :style="initPos==='top-to-bottom'?'max-height:'+ 100/TableLen+'%;'+'min-height:'+100/TableLen+'%;':'max-width:'+100/TableLen+'%;'+'min-width:'+100/TableLen+'%'"
-             :key="item.ids" v-for="(item,index) in TableData"
+             :key="item.ids" v-for="item in TableData"
              @click="getItem(item)">
             <slot :item="item"></slot>
         </div>
@@ -82,46 +82,32 @@
             }
         },
         methods: {
-            randomIndex() {
-                return Math.floor(Math.random() * 1000)
+            disposData(newData) {
+                let _this = this;
+                if (Array.isArray(newData)) {
+                    for (let i = 0; i < newData.length; i++) {
+                        _this.personDate.unshift(_this.randomIndex(newData[i]));
+                    }
+                } else {
+                    _this.personDate.unshift(_this.randomIndex(newData));
+                }
+                return _this.personDate;
+            },
+            randomIndex(data) {
+                data.ids = Math.floor(Math.random() * 1000);
+                return data;
             },
             getItem(item) {
                 this.$emit('item', item);
             },
             add(newData) {
                 let _this = this;
-                if (newData instanceof Array) {
-                    for (let i = 0; i < newData.length; i++) {
-                        newData[i].ids = _this.randomIndex();
-                        _this.personDate.unshift(newData[i]);
-                    }
-                } else {
-                    newData.ids = _this.randomIndex();
-                    _this.personDate.unshift(newData)
-                }
+                _this.disposData(newData);
             }
         },
-        mounted(){
-            if (this.listData instanceof Array) {
-                for (let i = 0; i < this.listData.length; i++) {
-                    this.listData[i].ids = this.randomIndex();
-                    this.personDate.unshift(this.listData[i]);
-                }
-            }
-        },
-        watch: {
-            // list数据更新
-            // listData(newVal, oldVal) {
-            //     this.$nextTick(() => {
-            //         if (newVal instanceof Array) {
-            //             for (let i = 0; i < newVal.length; i++) {
-            //                 this.personDate.push(newVal[i]);
-            //             }
-            //             return this.personDate
-            //         }
-            //     })
-            // }
-        },
+        mounted() {
+            this.disposData(this.listData);
+        }
     }
 </script>
 
@@ -138,7 +124,6 @@
         display: flex;
         align-content: space-around;
         width: 100%;
-        height: 100%;
         overflow: hidden;
         flex-direction: row;
         align-items: center;

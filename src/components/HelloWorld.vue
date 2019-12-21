@@ -5,7 +5,7 @@
             <div class="main">
                 <div class="container">
                     <list-animation ref="listAnimation_list"
-                                    :TableLen="6" :listData='listdata' :option="{}" initPos="top-to-bottom" duration="1.2s">
+                                    :TableLen="6" :listData='listdata' initPos="top-to-bottom" duration="1.2s">
                         <template slot-scope="{item}">
                             <div class="box">
                                 <img class="item" :src="item.image"/>
@@ -20,7 +20,7 @@
                 <p style="margin-top: 6vw">方向:从左到右</p>
                 <div class="container1">
                     <list-animation ref="listAnimation"
-                                    :TableLen="4" :listData='listdata' :option="{}" initPos="left-to-right" duration="1.2s">
+                                    :TableLen="4" :listData='listdata' initPos="left-to-right" duration="1.2s">
                         <template slot-scope="{item}">
                             <div class="latest-img-backgrounds">
                                 <img class="item" :src="item.image"/>
@@ -134,9 +134,9 @@
     }
 
     .latest-img-backgrounds {
-        width: 70%;
-        height: 80%;
+        width: 100%;
+        height: 100%;
         vertical-align: middle;
-        display: inherit;
+        display: flex;
     }
 </style>
