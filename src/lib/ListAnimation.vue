@@ -1,6 +1,6 @@
 <template>
     <transition-group
-            :class="initPos==='top-to-bottom'?'li':'li-bottom'"
+            :class="initPos==='top-to-bottom'?'li li-top':'li li-left'"
             name='flip-list'
             tag='div'
             mode='in-out'
@@ -53,9 +53,7 @@
         computed: {
             TableData: function () {
                 let _this = this;
-                if (_this.personDate.length > _this.TableLen) {
-                    _this.personDate.splice(_this.TableLen, 1);
-                }
+                if (_this.personDate.length > _this.TableLen) _this.personDate.splice(_this.TableLen, 1);
                 return _this.personDate;
             },
             slidStyle() {
@@ -63,6 +61,7 @@
                     document.styleSheets[0].insertRule('.flip-list-enter-active { transition: all ' + this.duration + '!important; }', 0);
                     document.styleSheets[0].insertRule('.flip-list-move { transition: all ' + this.duration + '!important; }', 0);
                 }
+                return 0;
             },
             enterStyle: function () {
                 switch (this.initPos) {
@@ -84,13 +83,11 @@
         methods: {
             disposData(newData) {
                 let _this = this;
-                if (Array.isArray(newData)) {
-                    for (let i = 0; i < newData.length; i++) {
-                        _this.personDate.unshift(_this.randomIndex(newData[i]));
-                    }
-                } else {
-                    _this.personDate.unshift(_this.randomIndex(newData));
-                }
+                if (Array.isArray(newData))
+                    newData.forEach(function (item) {
+                        _this.personDate.unshift(_this.randomIndex(item));
+                    });
+                else _this.personDate.unshift(_this.randomIndex(newData));
                 return _this.personDate;
             },
             randomIndex(data) {
@@ -116,19 +113,16 @@
         display: flex;
         width: 100%;
         height: 100%;
-        flex-direction: column;
         align-content: space-around;
         overflow: hidden;
     }
-    .li-bottom {
-        display: flex;
-        width: 100%;
-        align-content: space-around;
+    .li-top{
+        flex-direction: column;
+    }
+    .li-left{
         flex-direction: row;
         align-items: center;
-        overflow: hidden;
     }
-
     .flip-list-enter-active {
         transition: all 1.2s;
     }
