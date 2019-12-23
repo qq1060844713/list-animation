@@ -77,7 +77,7 @@
             timer() {
                 return setInterval(() => {
                     this.add();
-                }, 1000)
+                }, 3000)
             }
         },
         mounted(){
@@ -118,7 +118,6 @@
         height: 100%;
         display: flex;
         justify-content: center;
-        margin: -1vw;
     }
     .box_l {
         width: 100%;
@@ -128,8 +127,8 @@
     }
 
     .item {
-        height: 80%;
-        width: 90%;
+        height: 70%;
+        width: 70%;
         align-self: center;
     }
 

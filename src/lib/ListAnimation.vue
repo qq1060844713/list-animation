@@ -2,7 +2,7 @@
     <transition-group
             :class="initPos==='top-to-bottom'?'li':'li-bottom'"
             name='flip-list'
-            tag='ul'
+            tag='div'
             mode='in-out'
             v-bind:style="slidStyle"
             :enter-class="enterStyle"
